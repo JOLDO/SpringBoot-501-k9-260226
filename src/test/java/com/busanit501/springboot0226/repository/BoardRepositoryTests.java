@@ -76,4 +76,11 @@ public class BoardRepositoryTests {
         List<Board> todoList = result.getContent();
         log.info("페이징 처리가 된 10개 데이터 확인 result.getContent() : " + todoList);
     }
+
+    @Test
+    public void testSearch() {
+        // page 2번에서(page =1), 크기 : 10, 내림차순
+        Pageable pageable = PageRequest.of(1,10,Sort.by("bno").descending());
+        boardRepository.search1(pageable);
+    }
 }
