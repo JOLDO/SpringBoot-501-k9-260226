@@ -83,4 +83,29 @@ public class BoardRepositoryTests {
         Pageable pageable = PageRequest.of(1,10,Sort.by("bno").descending());
         boardRepository.search1(pageable);
     }
+
+    @Test
+    public void testSearch2() {
+        // 검색, 페이징 처리 ,
+        // 준비물 1) 검색 타입 2) 검색어 3) 화면에서 전달받은 페이징 처리 준비물(보기 위한 페이지 번호, 크기 10개)
+        String[] types = {"t", "c", "w"};
+        String keyword = "t";
+        Pageable pageable = PageRequest.of(0,10,Sort.by("bno").descending());
+        // 메서드에, 준비한 준비물을 대입을 해서, 호출해보기.
+        Page<Board> result = boardRepository.searchAll(types,keyword, pageable );
+
+        // result 결과에는 다양한 페이징 준비물이 들어있다.
+        log.info("전체 갯수 result.getTotalElements() : " + result.getTotalElements());
+        log.info("전체 페이지 result.getTotalPages() : " + result.getTotalPages());
+        log.info("조회 페이지 번호  result.getNumber() :  " + result.getNumber());
+        log.info("조회 페이지 크기 result.getSize() :  " + result.getSize());
+
+        log.info("이전 페이지 여부 result.hasPrevious() :  " + result.hasPrevious());
+        log.info("다음 페이지 여부 result.hasNext() :  " + result.hasNext());
+
+        // 페이징 처리가 된 10개의 데이터 목록도 있음.
+        List<Board> todoList = result.getContent();
+        log.info("페이징 처리가 된 10개 데이터 확인 result.getContent() : " + todoList);
+
+    }
 }
