@@ -10,9 +10,15 @@ import com.busanit501.springboot0226.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +61,24 @@ public class ReplyServiceImpl implements ReplyService{
 
     @Override
     public PageResponseDTO<ReplyDTO> getListOfBoard(Long bno, PageRequestDTO pageRequestDTO) {
-        return null;
+        // 페이징 준비물
+        Pageable pageable = PageRequest.of(pageRequestDTO.getPage() <= 0 ? 0 : pageRequestDTO.getPage()-1,
+                pageRequestDTO.getSize(), Sort.by("rno").ascending());
+        // result에 , 페이징 준비물이 담겨져 있다.
+        Page<Reply> result = replyRepository.listOfBoard(bno, pageable);
+
+        //  페이징 처리가 된 댓글 목록,
+        List<ReplyDTO> dtoList = result.getContent().stream()
+                        .map(reply -> modelMapper.map(reply, ReplyDTO.class))
+                        .collect(Collectors.toList());
+        // 댓글의 전체 갯수
+        int total = (int)result.getTotalElements();
+        PageResponseDTO<ReplyDTO> pageResponseDTO = PageResponseDTO.<ReplyDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total(total)
+                .build();
+
+        return pageResponseDTO;
     }
 }
