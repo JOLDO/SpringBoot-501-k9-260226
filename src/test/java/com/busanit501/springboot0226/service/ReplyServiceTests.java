@@ -25,4 +25,26 @@ public class ReplyServiceTests {
         log.info("작성 후, 댓글 번호 : " + rno);
     }
 
+    @Test
+    public void testReplySelectOne() {
+        // 각자 등록되 댓글 번호 확인 : 5L
+       ReplyDTO replyDTO = replyService.read(5L);
+       log.info("댓글 서비스 단위테스트 중, 댓글 조회 replyDTO : " + replyDTO);
+    }
+
+    @Test
+    public void testReplyUpdateOne() {
+        // 일단 디비에서, 5번으로 조회해서, 불러오고, 내용 변경 해서,, 그리고 수정하기.
+        ReplyDTO replyDTO = replyService.read(5L);
+        replyDTO.setReplyText("수정 서비스 테스트 !@!!!");
+        // 각자 등록되 댓글 번호 확인 : 5L
+        replyService.modify(replyDTO);
+        log.info("댓글 서비스 단위테스트 중, 댓글 수정 데이터베이스로 확인 하기.  : ");
+    }
+
+    @Test
+    public void testReplyDeleteOne() {
+        replyService.remove(5L);
+    }
+
 }
