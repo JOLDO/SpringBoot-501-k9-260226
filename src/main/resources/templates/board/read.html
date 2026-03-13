@@ -63,7 +63,79 @@
                 </div>
             </div>
         </div>
+        <!--        row 끝나는 부분-->
     </div>
+
+    <!--    댓글 입력 버튼, 입력창, -->
+    <!--    1)댓글의 목록, 2)댓글 추가 버튼 , 3)페이징 번호 화면 작업-->
+    <div class="row mt-3">
+        <!--        부트 스트랩에서, 전체 가로 영역을 12 등분으로 나눔.-->
+        <!--        col-md-12 : 전체를 차지-->
+        <div class="col-md-12">
+            <!--            2)댓글 추가 버튼 : addReplyBtn -->
+            <div class="my-4">
+                <button class="btn btn-info addReplyBtn">댓글 등록</button>
+            </div>
+            <!--    댓글의 목록,-->
+            <!--            1)댓글의 목록 : replyList -->
+            <ul class="list-group replyList">
+                <!-- li  태그를 innerHTML 를 이용해서, 요소를 추가할 예정, 자바스크립트 문법으로-->
+            </ul>
+            <!--    댓글의 목록,-->
+        </div>
+    </div>
+    <!--    댓글 입력 버튼, 입력창, -->
+
+
+    <!--    댓글의 페이지 네이션 작업-->
+    <!--        댓글의 페이지 번호 출력-->
+    <div class="row mt-3">
+        <div class="col">
+            <div class="paging-container">
+                <ul class="pagination replyPaging">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--    댓글의 페이지 네이션 작업-->
+
+    <!--    댓글 등록 모달창1-->
+    <div class="modal fade registerModal" tabindex="-1"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">댓글 등록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!--                    댓글 등록 입력폼 추가하기-->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">내용</span>
+                        <input type="text" class="form-control replyText">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">작성자</span>
+                        <input type="text" th:value="${user.Username}" class="form-control replyer" readonly>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary registerCloseBtn" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary registerBtn">댓글 등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    댓글 등록 모달창1-->
+
+
+    <!--    axios 설치 cdn 링크 추가-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!--수동으로 우리가 만들어서 사용할 js 추가 -->
+    <script src="/js/reply.js"></script>
+
 </div>
 <script layout:fragment="script" th:inline="javascript">
 
